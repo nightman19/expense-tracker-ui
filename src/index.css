@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette: a working ledger, not a finance dashboard */
+  --color-paper: #ede7d6;
+  --color-paper-raised: #f6f2e6;
+  --color-ink: #1c2b39;
+  --color-ink-soft: #52657a;
+  --color-line: #d4cbb0;
+  --color-stamp: #b3852a;
+  --color-stamp-soft: #e9d9ae;
+  --color-good: #3f6b4f;
+  --color-good-soft: #dbe7dd;
+  --color-over: #a8402b;
+  --color-over-soft: #f0dcd5;
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Work Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+html {
+  background: var(--color-paper);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
