@@ -89,7 +89,7 @@ export default function App() {
     <div className="min-h-screen bg-paper">
       <div className="max-w-md mx-auto px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-28">
         <header className="text-center mb-4">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">Ledger</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">Pocket Ledger</p>
         </header>
 
         {error && (

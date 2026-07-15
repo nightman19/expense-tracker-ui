@@ -1,6 +1,6 @@
 {
-  "name": "Ledger",
-  "short_name": "Ledger",
+  "name": "Pocket Ledger",
+  "short_name": "Pocket Ledger",
   "description": "A personal expense ledger",
   "start_url": "/",
   "display": "standalone",
