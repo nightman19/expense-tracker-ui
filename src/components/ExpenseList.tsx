@@ -9,11 +9,11 @@ function formatDate(dateStr: string): string {
 export function ExpenseList({
   expenses,
   categories,
-  onDelete,
+  onDeleteRequest,
 }: {
   expenses: Expense[];
   categories: Category[];
-  onDelete: (id: number) => void;
+  onDeleteRequest: (expense: Expense) => void;
 }) {
   const categoryName = (id: number | null) =>
     categories.find((c) => c.id === id)?.name ?? "Uncategorized";
@@ -44,7 +44,7 @@ export function ExpenseList({
           </div>
           <span className="font-mono tabular text-ink shrink-0">{formatMoney(expense.amount)}</span>
           <button
-            onClick={() => onDelete(expense.id)}
+            onClick={() => onDeleteRequest(expense)}
             aria-label={`Delete ${expense.description}`}
             className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-ink-soft/50 hover:text-over hover:bg-over-soft transition"
           >

@@ -3,6 +3,7 @@ import { api, type Category, type Expense, type MonthSummary } from "./api";
 import { SummaryHeader } from "./components/SummaryHeader";
 import { ExpenseList } from "./components/ExpenseList";
 import { AddExpenseSheet } from "./components/AddExpenseSheet";
+import { ConfirmDeleteSheet } from "./components/ConfirmDeleteSheet";
 
 function currentMonth(): string {
   const now = new Date();
@@ -39,6 +40,7 @@ export default function App() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState<Expense | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -75,13 +77,17 @@ export default function App() {
     await refresh();
   }
 
-  async function handleDelete(id: number) {
+  async function handleConfirmDelete() {
+    if (!pendingDelete) return;
+    const id = pendingDelete.id;
     setExpenses((prev) => prev.filter((e) => e.id !== id)); // optimistic
     try {
       await api.deleteExpense(id);
       await refresh();
     } catch {
       await refresh(); // roll back to server truth on failure
+    }finally {
+      setPendingDelete(null);
     }
   }
 
@@ -107,7 +113,7 @@ export default function App() {
           {loading ? (
             <p className="text-center text-ink-soft font-body py-8">Loading…</p>
           ) : (
-            <ExpenseList expenses={expenses} categories={categories} onDelete={handleDelete} />
+            <ExpenseList expenses={expenses} categories={categories} onDeleteRequest={setPendingDelete} />
           )}
         </div>
       </div>
@@ -131,6 +137,14 @@ export default function App() {
             setCategories((prev) => [...prev, created]);
             return created;
           }}
+        />
+      )}
+
+      {pendingDelete && (
+        <ConfirmDeleteSheet
+          expense={pendingDelete}
+          onCancel={() => setPendingDelete(null)}
+          onConfirm={handleConfirmDelete}
         />
       )}
     </div>
